@@ -1,4 +1,4 @@
-import React,{useRef,useState} from 'react'
+import React,{useRef} from 'react'
 import classes from './auth.module.css'
 
 
@@ -21,21 +21,6 @@ const Authentication = () => {
         returnSecureToken: true,
       }),
       headers:{ "content-type": "authentication/json",}
-    }).then((res) => {
-  
-      if (res.ok) {
-        return res.json()
-      } else {
-        return res.json().then((data) => {
-          let errorMessage = "Authentication failed!";
-          // if(data && data.error && data.error.message){
-
-          //   errorMessage = data.error.message
-          // }
-         
-          throw new Error(errorMessage)
-        });
-      }
     }).then(data =>{
       console.log(data);
      
