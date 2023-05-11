@@ -47,6 +47,7 @@ const Login = () => {
       setIsLoading(false);
       if (res.ok) {
         return res.json()
+     
       } else {
         return res.json().then((data) => {
           let errorMessage = "Authentication failed!";
@@ -63,6 +64,7 @@ const Login = () => {
       const expirationTime = new Date(new Date().getTime() + (+data.expiresIn * 1000));
       authCtx.login(data.idToken, expirationTime.toISOString());
       history.replace('/profile-button');
+      
 
     }).catch(err=>{
       alert(err.message);

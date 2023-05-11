@@ -3,6 +3,7 @@ import { useContext } from "react";
 import AuthContext from "../../store/auth-context";
 
 import classes from "./MainNavigation.module.css";
+import EmailVerification from "../../authontication/EmailVerification";
 
 const MainNavigation = () => {
   const authCtx = useContext(AuthContext);
@@ -27,6 +28,11 @@ const MainNavigation = () => {
           {isLoggedIn && (
             <li>
               <Link to="/profile">Profile</Link>
+            </li>
+          )}
+          {isLoggedIn && (
+            <li>
+              <EmailVerification/>
             </li>
           )}
           {isLoggedIn && (

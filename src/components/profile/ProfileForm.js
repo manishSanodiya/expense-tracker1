@@ -25,7 +25,7 @@ const ProfileForm = () => {
         "content-type": "application/json",
       }
     }).then(data=>{
-      console.log(data.displayName);
+      console.log(data.user[0]);
     })
   }
 
@@ -48,9 +48,7 @@ const ProfileForm = () => {
         },
       }
     ).then((res) => {
-      // history.replace('/');
-    //  nameInputRef='';
-    //  addressInputRef='';
+  
        
       editPrefill();
       
