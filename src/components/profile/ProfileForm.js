@@ -8,8 +8,26 @@ const ProfileForm = () => {
   const nameInputRef = useRef('');
   const addressInputRef = useRef('');
   const authCtx = useContext(AuthContext);
+  let gotName;
+  let gotAddress;
+  
+
 
   const history = useHistory()
+
+  const editPrefill = () =>{
+    fetch('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyCh6JzuNPN1qeoGsEWPqsl3z1VpTccugWA',{
+      method:"POST",
+      body:JSON.stringify({
+        idToken:authCtx.token,
+      }),
+      headers:{
+        "content-type": "application/json",
+      }
+    }).then(data=>{
+      console.log(data.displayName);
+    })
+  }
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -21,8 +39,8 @@ const ProfileForm = () => {
         method: "POST",
         body: JSON.stringify({
           idToken: authCtx.token,
-          password: enteredNewName,
-          address: enteredNewAddress,
+          displayName: enteredNewName,
+          photoUrl: enteredNewAddress,
           returnSecureToken: false,
         }),
         headers: {
@@ -30,14 +48,21 @@ const ProfileForm = () => {
         },
       }
     ).then((res) => {
-      history.replace('/');
+      // history.replace('/');
+    //  nameInputRef='';
+    //  addressInputRef='';
+       
+      editPrefill();
+      
     });
+
+  
   };
 
   return (
     <form className={classes.form} onSubmit={submitHandler}>
       <div className={classes.control}>
-        <label htmlFor="name">Full Name</label>
+        <label htmlFor="name" value={gotName}>Full Name</label>
         <input
           type="text"
           id="full-name"
@@ -46,9 +71,9 @@ const ProfileForm = () => {
         />
       </div>
       <div className={classes.control}>
-        <label htmlFor="Address">Address</label>
+        <label htmlFor="Address" value={gotAddress}>Photo url</label>
         <input
-          type="text"
+          type="url"
           id="address"
         
           ref={addressInputRef}

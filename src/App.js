@@ -1,16 +1,17 @@
 import { Switch, Route,Redirect} from 'react-router-dom';
 import './App.css';
-import Authentication from './authontication/Authentication';
+
 import Login from './authontication/Login';
 import { Fragment } from 'react';
 import ProfileButton from './components/profile/ProfileButton';
 import ProfileForm from './components/profile/ProfileForm';
+import Layout from './components/Layout/Layout';
 
 
 function App() {
   return (
-    <Fragment>
     
+    <Layout>
     <Switch>
     <Route path='/' exact>
           <Login />
@@ -18,16 +19,16 @@ function App() {
         <Route path='/profile-button' exact>
           <ProfileButton />
         </Route>
-        <Route path='/signup' exact>
-          <Authentication />
-        </Route>
+      
         <Route path='/profile' exact>
           <ProfileForm />
         </Route>
     
     </Switch>
+    </Layout>
+   
 
-    </Fragment>
+
   );
 }
 
