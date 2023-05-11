@@ -2,6 +2,7 @@ import React,{useRef,useContext,useState} from 'react'
 import classes from './auth.module.css'
 import AuthContext from '../store/auth-context';
 import { useHistory} from 'react-router-dom';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 const Login = () => {
   const emailInputRef = useRef();
@@ -93,6 +94,7 @@ const Login = () => {
             <button>{isLogin ? "login" : "create account"}</button>
           )}
           {isLoading && <p>Sending Request...</p>}
+          <Link to='/forgot-password'>forgot password click here</Link>
           <button
             type="button"
             className={classes.toggle}

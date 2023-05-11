@@ -6,6 +6,7 @@ import { Fragment } from 'react';
 import ProfileButton from './components/profile/ProfileButton';
 import ProfileForm from './components/profile/ProfileForm';
 import Layout from './components/Layout/Layout';
+import ForgotPassword from './authontication/ForgotPassword';
 
 
 function App() {
@@ -22,6 +23,9 @@ function App() {
       
         <Route path='/profile' exact>
           <ProfileForm />
+        </Route>
+        <Route path='/forgot-password' exact>
+         <ForgotPassword/>
         </Route>
     
     </Switch>
