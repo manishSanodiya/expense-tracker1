@@ -7,6 +7,7 @@ import ProfileButton from './components/profile/ProfileButton';
 import ProfileForm from './components/profile/ProfileForm';
 import Layout from './components/Layout/Layout';
 import ForgotPassword from './authontication/ForgotPassword';
+import Expenses from './components/Expenses';
 
 
 function App() {
@@ -26,6 +27,10 @@ function App() {
         </Route>
         <Route path='/forgot-password' exact>
          <ForgotPassword/>
+        </Route>
+    
+        <Route path='/expenses' exact>
+         <Expenses/>
         </Route>
     
     </Switch>

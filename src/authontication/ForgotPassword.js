@@ -28,7 +28,7 @@ const ForgotPassword = () => {
               });
             }
           }).then(data =>{
-            console.log(data);
+            // console.log(data);
             
       
           }).catch(err=>{
@@ -40,7 +40,7 @@ const ForgotPassword = () => {
     <div className={classes.control}>
       <label htmlFor="new-password">Enter Email</label>
       <input
-        type="password"
+        type="email"
         id="new-password"
     
         ref={emailInputRef}
