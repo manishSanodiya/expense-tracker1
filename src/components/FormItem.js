@@ -4,7 +4,7 @@ const FormItem = (props) => {
   return (
     
       <li>
-        money spent:{props.money}, discription:{props.discription}, category:{props.category},
+       {props.index}, money spent:{props.money}, discription:{props.discription}, category:{props.category},
         
       </li>
     
