@@ -1,19 +1,23 @@
-import React,{useRef,useContext,useState} from 'react'
-import classes from './auth.module.css'
-import AuthContext from '../store/auth-context';
-import { useHistory} from 'react-router-dom';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import React, { useRef, useState } from "react";
+import classes from "./auth.module.css";
+import { useSelector,useDispatch } from "react-redux";
+import { loginActions } from "../store/loginSlice";
+
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+
+import ProfileButton from "../components/profile/ProfileButton";
 
 const Login = () => {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
 
-  const history = useHistory();
 
-  const authCtx = useContext(AuthContext);
+const dispatch = useDispatch()
+const isLoggedIn = useSelector((state) => state.login.isloggedIn);
+ 
 
   const [isLogin, setIsLogin] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
+
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -25,7 +29,7 @@ const Login = () => {
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
 
-    setIsLoading(true);
+   
     let url;
     if (isLogin) {
       url =
@@ -45,10 +49,9 @@ const Login = () => {
         "content-type": "authentication/json",
       },
     }).then((res) => {
-      setIsLoading(false);
+     
       if (res.ok) {
         return res.json()
-     
       } else {
         return res.json().then((data) => {
           let errorMessage = "Authentication failed!";
@@ -62,18 +65,44 @@ const Login = () => {
       }
     }).then(data =>{
       console.log(data);
-      const expirationTime = new Date(new Date().getTime() + (+data.expiresIn * 1000));
-      authCtx.login(data.idToken, expirationTime.toISOString());
-      history.replace('/profile-button');
-      
+      // const expirationTime = new Date(new Date().getTime() + (+data.expiresIn * 1000));
+      // authCtx.login(data.idToken, expirationTime.toISOString());
+      // history.replace('/');
+      localStorage.setItem("idToken", JSON.stringify(data.idToken));
+      localStorage.setItem("data", JSON.stringify(data));
+      setIsLogin(true);
+      dispatch(loginActions.login());
 
-    }).catch(err=>{
-      alert(err.message);
     })
+      // .then((res) => {
+      //   if (res.ok) {
+      //     // const data = res.json();
+      //     // console.log("User has logged in");
+      //     // console.log(data);
+      //     // localStorage.setItem("idToken", JSON.stringify(data));
+      //     // setIsLogin(true);
+      //     // //   emailRef.current.value = '';
+      //     // //   passwordRef.current.value = '';
+      //     // dispatch(loginActions.login());
+     
+     
+      //   } else {
+      //     const data = res.json();
+      //     throw data.error;
+      //   }
+      // })
+
+      .catch((err) => {
+        alert(err.message);
+      });
   };
-  
-    return (
-      <section className={classes.auth}>
+  if (isLoggedIn) {
+    return <ProfileButton/>
+}
+
+
+  return (
+    <section className={classes.auth}>
       <h1>{isLogin ? "Login" : "Sign Up"}</h1>
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
@@ -90,11 +119,11 @@ const Login = () => {
           />
         </div>
         <div className={classes.actions}>
-          {!isLoading && (
+       
             <button>{isLogin ? "login" : "create account"}</button>
-          )}
-          {isLoading && <p>Sending Request...</p>}
-          <Link to='/forgot-password'>forgot password click here</Link>
+        
+          
+          <Link to="/forgot-password">forgot password click here</Link>
           <button
             type="button"
             className={classes.toggle}
@@ -108,5 +137,4 @@ const Login = () => {
   );
 };
 
-
-export default Login
+export default Login;

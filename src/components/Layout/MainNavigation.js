@@ -1,16 +1,19 @@
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import AuthContext from "../../store/auth-context";
+import { useDispatch,useSelector } from "react-redux";
+
 
 import classes from "./MainNavigation.module.css";
 import EmailVerification from "../../authontication/EmailVerification";
+import { loginActions } from "../../store/loginSlice";
 
 const MainNavigation = () => {
-  const authCtx = useContext(AuthContext);
-  const isLoggedIn = authCtx.isLoggedIn;
+ 
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.login.isloggedIn);
 
   const logoutHandler = ()=>{
-    authCtx.logout();
+    dispatch(loginActions.logout());
+   localStorage.removeItem("idToken");
   }
 
   return (
@@ -28,6 +31,11 @@ const MainNavigation = () => {
           {isLoggedIn && (
             <li>
               <Link to="/profile">Profile</Link>
+            </li>
+          )}
+          {isLoggedIn && (
+            <li>
+             <Link to="/expenses">Your Expenses</Link>
             </li>
           )}
           {isLoggedIn && (

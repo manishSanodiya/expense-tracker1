@@ -1,13 +1,14 @@
-import classes from "./profile.module.css";
+
 import { useRef, useContext } from "react";
-import AuthContext from "../../store/auth-context";
+
 // import {useHistory} from "react-router-dom";
 import {useHistory} from 'react-router-dom'
+import classes from './../../components/expenses.module.css'
 
 const ProfileForm = () => {
   const nameInputRef = useRef('');
   const addressInputRef = useRef('');
-  const authCtx = useContext(AuthContext);
+ 
   let gotName;
   let gotAddress;
   
@@ -19,7 +20,7 @@ const ProfileForm = () => {
     fetch('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyCh6JzuNPN1qeoGsEWPqsl3z1VpTccugWA',{
       method:"POST",
       body:JSON.stringify({
-        idToken:authCtx.token,
+        idToken:localStorage.getItem('idToken'),
       }),
       headers:{
         "content-type": "application/json",
@@ -57,7 +58,7 @@ const ProfileForm = () => {
       {
         method: "POST",
         body: JSON.stringify({
-          idToken: authCtx.token,
+          idToken:localStorage.getItem('idToken'),
           displayName: enteredNewName,
           photoUrl: enteredNewAddress,
           returnSecureToken: false,
