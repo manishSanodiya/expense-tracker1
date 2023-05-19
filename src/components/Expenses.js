@@ -198,6 +198,18 @@ const Expenses = () => {
   //   emailUrl={emailUrl}
   // />
   // ));
+  //download csv file
+  const title = ['Category', 'Amount', 'Description'];
+  const data = [title];
+
+  expenseList.forEach((item) => {
+    data.push([item.category, item.amount, item.discription]);
+  });
+
+  const creatingCSV = data.map((row) => row.join(',')).join('\n');
+  const blob = new Blob([creatingCSV]);
+
+
   return (
     <div className={classes.form} >
       {totalAmount>10000 && <button className={classes.action} onClick={activatePremiumHandler}>add Premium</button>}
@@ -226,6 +238,11 @@ const Expenses = () => {
           <button>Add Expenses</button>
         </div>
       </form>
+      {totalAmount > 10000 && activatePremium && (
+                <a className={classes.a} href={URL.createObjectURL(blob)} download='expenses.csv'>
+                  Download
+                </a>
+              )}
       <ul>
         
        {newList}
